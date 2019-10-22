@@ -1,0 +1,11 @@
+*.swp
+*.tfstate*
+**/.terraform
+**/*.plan
+**/secret_files
+**/*.tfenvs
+**/aws_accounts/iam
+.DS_Store
+outputs/
+terraform.d/
+**/terraform.tfvars
