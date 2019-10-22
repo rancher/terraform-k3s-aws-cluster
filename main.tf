@@ -22,7 +22,6 @@ locals {
   k3s_cluster_secret          = var.k3s_cluster_secret != null ? var.k3s_cluster_secret : random_password.k3s_cluster_secret.result
   server_instance_type        = var.server_instance_type
   agent_instance_type         = var.agent_instance_type
-  storage_cafile              = var.storage_cafile
   agent_image_id              = var.agent_image_id != null ? var.agent_image_id : data.aws_ami.ubuntu.id
   server_image_id             = var.server_image_id != null ? var.server_image_id : data.aws_ami.ubuntu.id
   aws_azs                     = var.aws_azs
@@ -31,12 +30,18 @@ locals {
   server_node_count           = var.server_node_count
   agent_node_count            = var.agent_node_count
   ssh_keys                    = var.ssh_keys
+  deploy_rds                  = var.k3s_storage_endpoint != "sqlite" ? 1 : 0
   db_instance_type            = var.db_instance_type
   db_user                     = var.db_user
   db_pass                     = var.db_pass
   db_name                     = var.db_name != null ? var.db_name : var.name
-  db_node_count               = var.db_node_count
-  server_k3s_exec             = "--disable-agent --no-deploy traefik --tls-san ${aws_lb.server-lb.dns_name} --storage-cafile /srv/rds-ca-2019-root.pem --storage-endpoint postgres://${local.db_user}:${local.db_pass}@${aws_rds_cluster.k3s.endpoint}/${local.db_name}"
+  db_node_count               = var.k3s_storage_endpoint != "sqlite" ? var.db_node_count : 0
+  k3s_storage_cafile          = var.k3s_storage_cafile
+  k3s_storage_endpoint        = var.k3s_storage_endpoint == "sqlite" ? null : "--storage-endpoint postgres://${local.db_user}:${local.db_pass}@${aws_rds_cluster.k3s.0.endpoint}/${local.db_name}"
+  k3s_disable_agent           = var.k3s_disable_agent ? "--disable-agent" : ""
+  k3s_tls_san                 = var.k3s_tls_san != null ? var.k3s_tls_san : "--tls-san ${aws_lb.server-lb.dns_name}"
+  k3s_deploy_traefik          = var.k3s_deploy_traefik ? "" : "--no-deploy traefik"
+  server_k3s_exec             = ""
   agent_k3s_exec              = ""
   certmanager_version         = var.certmanager_version
   rancher_version             = var.rancher_version
@@ -67,10 +72,11 @@ provider "rancher2" {
 
 provider "rancher2" {
   api_url   = "https://${local.name}.${local.domain}"
-  token_key = rancher2_bootstrap.admin.token
+  token_key = rancher2_bootstrap.admin.0.token
 }
 
 resource "null_resource" "wait_for_rancher" {
+  count = local.install_rancher ? 1 : 0
   provisioner "local-exec" {
     command = <<EOF
 while [ "$${subject}" != "*  subject: CN=$${RANCHER_HOSTNAME}" ]; do
@@ -103,6 +109,7 @@ EOF
 }
 
 resource "rancher2_bootstrap" "admin" {
+  count      = local.install_rancher ? 1 : 0
   provider   = rancher2.bootstrap
   password   = local.rancher_password
   depends_on = [null_resource.wait_for_rancher]

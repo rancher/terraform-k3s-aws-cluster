@@ -105,7 +105,7 @@ variable "certmanager_version" {
 
 variable "use_default_vpc" {
   type        = bool
-  default     = true
+  default     = false
   description = "Should the default VPC for the region selected be used for Rancher"
 }
 
@@ -207,19 +207,19 @@ variable "skip_final_snapshot" {
 }
 
 variable "install_rancher" {
-  default     = true
+  default     = false
   type        = bool
   description = "Boolean that defines whether or not to install Rancher"
 }
 
 variable "install_ingress" {
-  default     = true
+  default     = false
   type        = bool
   description = "Boolean that defines whether or not to install nginx-ingress"
 }
 
 variable "install_certmanager" {
-  default     = true
+  default     = false
   type        = bool
   description = "Boolean that defines whether or not to install Cert-Manager"
 }
@@ -230,7 +230,7 @@ variable "create_external_nlb" {
   description = "Boolean that defines whether or not to create an external load balancer"
 }
 
-variable "storage_cafile" {
+variable "k3s_storage_cafile" {
   default     = "/srv/rds-combined-ca-bundle.pem"
   type        = string
   description = "Location to download RDS CA Bundle"
@@ -240,4 +240,28 @@ variable "registration_command" {
   default     = ""
   type        = string
   description = "Registration command to import cluster into Rancher. Should not be used when installing Rancher in this same cluster"
+}
+
+variable "k3s_storage_endpoint" {
+  default     = "sqlite"
+  type        = string
+  description = "Storage Backend for K3S cluster to use. Valid options are 'sqlite' or 'postgres'"
+}
+
+variable "k3s_disable_agent" {
+  default     = true
+  type        = bool
+  description = "Whether to run the k3s agent on the same host as the k3s server"
+}
+
+variable "k3s_tls_san" {
+  default     = null
+  type        = string
+  description = "Sets k3s tls-san flag to this value instead of the default load balancer"
+}
+
+variable "k3s_deploy_traefik" {
+  default     = true
+  type        = bool
+  description = "Configures whether to deploy traefik ingress or not"
 }

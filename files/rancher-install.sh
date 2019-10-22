@@ -9,8 +9,6 @@ until [ "$(kubectl get pods --namespace cert-manager |grep Running|wc -l)" = "2"
   sleep 2
 done
 
-%{ endif }
-
 %{ if install_rancher }
 cat <<EOF > /var/lib/rancher/k3s/server/manifests/rancher.yaml
 ---
@@ -35,4 +33,5 @@ spec:
     letsEncrypt:
       email: ${letsencrypt_email}
 EOF
+%{ endif }
 %{ endif }

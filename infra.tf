@@ -201,11 +201,13 @@ resource "aws_autoscaling_group" "k3s_agent" {
 ### Create Database
 #############################
 resource "aws_db_subnet_group" "private" {
+  count       = local.deploy_rds
   name_prefix = "${local.name}-private"
   subnet_ids  = local.private_subnets
 }
 
 resource "aws_rds_cluster_parameter_group" "k3s" {
+  count       = local.deploy_rds
   name_prefix = "${local.name}-"
   description = "Force SSL for aurora-postgresql10.7"
   family      = "aurora-postgresql10.7"
@@ -224,17 +226,18 @@ resource "aws_rds_cluster_parameter_group" "k3s" {
 }
 
 resource "aws_rds_cluster" "k3s" {
+  count                           = local.deploy_rds
   cluster_identifier_prefix       = "${local.name}-"
   engine                          = "aurora-postgresql"
   engine_mode                     = "provisioned"
   engine_version                  = "10.7"
-  db_cluster_parameter_group_name = aws_rds_cluster_parameter_group.k3s.name
+  db_cluster_parameter_group_name = aws_rds_cluster_parameter_group.k3s.0.name
   availability_zones              = local.aws_azs
   database_name                   = local.db_name
   master_username                 = local.db_user
   master_password                 = local.db_pass
   preferred_maintenance_window    = "fri:11:21-fri:11:51"
-  db_subnet_group_name            = aws_db_subnet_group.private.id
+  db_subnet_group_name            = aws_db_subnet_group.private.0.id
   vpc_security_group_ids          = [aws_security_group.database.id]
   storage_encrypted               = true
 
@@ -249,10 +252,10 @@ resource "aws_rds_cluster" "k3s" {
 resource "aws_rds_cluster_instance" "k3s" {
   count                = local.db_node_count
   identifier_prefix    = "${local.name}-${count.index}"
-  cluster_identifier   = aws_rds_cluster.k3s.id
+  cluster_identifier   = aws_rds_cluster.k3s.0.id
   engine               = "aurora-postgresql"
   instance_class       = local.db_instance_type
-  db_subnet_group_name = aws_db_subnet_group.private.id
+  db_subnet_group_name = aws_db_subnet_group.private.0.id
 }
 
 #############################
