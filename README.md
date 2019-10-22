@@ -39,6 +39,7 @@ This module supports creating a k3s cluster with a postgres backend in AWS. By d
 | rancher\_chart | Helm chart to use for Rancher install | string | `"rancher-stable/rancher"` | no |
 | rancher\_password |  | string | n/a | yes |
 | rancher\_version | Version of Rancher to install | string | `"2.3.1"` | no |
+| registration\_command | Registration command to import cluster into Rancher. Should not be used when installing Rancher in this same cluster | string | `""` | no |
 | server\_image\_id | AMI to use for k3s server instances | string | `"null"` | no |
 | server\_instance\_ssh\_user | Username for sshing into instances | string | `"ubuntu"` | no |
 | server\_instance\_type |  | string | `"m5.large"` | no |

@@ -50,6 +50,7 @@ locals {
   install_rancher             = var.install_rancher
   install_ingress             = var.install_ingress
   create_external_nlb         = var.create_external_nlb ? 1 : 0
+  registration_command        = var.registration_command
 }
 
 resource "random_password" "k3s_cluster_secret" {

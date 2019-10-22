@@ -67,6 +67,11 @@ data "template_cloudinit_config" "k3s_server" {
     content_type = "text/x-shellscript"
     content      = templatefile("${path.module}/files/rancher-install.sh", { certmanager_version = local.certmanager_version, letsencrypt_email = local.letsencrypt_email, rancher_version = local.rancher_version, rancher_hostname = "${local.name}.${local.domain}", install_rancher = local.install_rancher, install_ingress = local.install_ingress, install_certmanager = local.install_certmanager })
   }
+
+  part {
+    content_type = "text/x-shellscript"
+    content      = templatefile("${path.module}/files/register-to-rancher.sh", { is_k3s_server = true, install_rancher = local.install_rancher, registration_command = local.registration_command })
+  }
 }
 
 data "template_cloudinit_config" "k3s_agent" {
