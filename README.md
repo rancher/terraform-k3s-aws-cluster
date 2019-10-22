@@ -49,4 +49,12 @@ This module supports creating a k3s cluster with a postgres backend in AWS. By d
 | use\_default\_vpc | Should the default VPC for the region selected be used for Rancher | bool | `"true"` | no |
 | vpc\_id | If use_default_vpc is false, the vpc id that Rancher should use | string | `"null"` | no |
 
+## Outputs
+
+| Name | Description |
+|------|-------------|
+| rancher\_admin\_password |  |
+| rancher\_token |  |
+| rancher\_url |  |
+
 <!-- END OF PRE-COMMIT-TERRAFORM DOCS HOOK -->
