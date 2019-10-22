@@ -212,7 +212,7 @@ variable "install_rancher" {
   description = "Boolean that defines whether or not to install Rancher"
 }
 
-variable "install_ingress" {
+variable "install_nginx_ingress" {
   default     = false
   type        = bool
   description = "Boolean that defines whether or not to install nginx-ingress"

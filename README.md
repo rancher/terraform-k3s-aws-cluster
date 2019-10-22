@@ -25,8 +25,8 @@ This module supports creating a k3s cluster with a postgres backend in AWS. By d
 | extra\_agent\_security\_groups | Additional security groups to attach to k3s agent instances | list | `[]` | no |
 | extra\_server\_security\_groups | Additional security groups to attach to k3s server instances | list | `[]` | no |
 | install\_certmanager | Boolean that defines whether or not to install Cert-Manager | bool | `"false"` | no |
-| install\_ingress | Boolean that defines whether or not to install nginx-ingress | bool | `"false"` | no |
 | install\_k3s\_version | Version of K3S to install | string | `"0.9.1"` | no |
+| install\_nginx\_ingress | Boolean that defines whether or not to install nginx-ingress | bool | `"false"` | no |
 | install\_rancher | Boolean that defines whether or not to install Rancher | bool | `"false"` | no |
 | k3s\_cluster\_secret | Override to set k3s cluster registration secret | string | `"null"` | no |
 | k3s\_deploy\_traefik | Configures whether to deploy traefik ingress or not | bool | `"true"` | no |

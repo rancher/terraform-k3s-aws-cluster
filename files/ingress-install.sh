@@ -1,5 +1,5 @@
 #!/bin/bash
-%{ if install_ingress }
+%{ if install_nginx_ingress }
 cat <<'EOF' > /var/lib/rancher/k3s/server/manifests/ingress.yaml
 ---
 apiVersion: v1

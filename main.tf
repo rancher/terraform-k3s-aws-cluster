@@ -53,7 +53,7 @@ locals {
   skip_final_snapshot         = var.skip_final_snapshot
   install_certmanager         = var.install_certmanager
   install_rancher             = var.install_rancher
-  install_ingress             = var.install_ingress
+  install_nginx_ingress       = var.install_nginx_ingress
   create_external_nlb         = var.create_external_nlb ? 1 : 0
   registration_command        = var.registration_command
   rancher_password            = var.rancher_password
