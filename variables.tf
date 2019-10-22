@@ -233,3 +233,9 @@ variable "storage_cafile" {
   type        = string
   description = "Location to download RDS CA Bundle"
 }
+
+variable "registration_command" {
+  default     = ""
+  type        = string
+  description = "Registration command to import cluster into Rancher. Should not be used when installing Rancher in this same cluster"
+}
