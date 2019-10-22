@@ -1,6 +1,6 @@
 #!/bin/bash
 
-%{ if !is_k3s_server }
+%{ if is_k3s_server }
 curl -o ${storage_cafile} https://s3.amazonaws.com/rds-downloads/rds-combined-ca-bundle.pem
 %{ endif }
 
