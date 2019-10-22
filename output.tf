@@ -4,10 +4,10 @@ output "rancher_admin_password" {
 }
 
 output "rancher_url" {
-  value = rancher2_bootstrap.admin.url
+  value = local.install_rancher ? rancher2_bootstrap.admin.0.url : null
 }
 
 output "rancher_token" {
-  value     = rancher2_bootstrap.admin.token
+  value     = local.install_rancher ? rancher2_bootstrap.admin.0.token : null
   sensitive = true
 }

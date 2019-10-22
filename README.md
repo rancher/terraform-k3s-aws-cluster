@@ -24,11 +24,16 @@ This module supports creating a k3s cluster with a postgres backend in AWS. By d
 | domain |  | string | `"eng.rancher.space"` | no |
 | extra\_agent\_security\_groups | Additional security groups to attach to k3s agent instances | list | `[]` | no |
 | extra\_server\_security\_groups | Additional security groups to attach to k3s server instances | list | `[]` | no |
-| install\_certmanager | Boolean that defines whether or not to install Cert-Manager | bool | `"true"` | no |
-| install\_ingress | Boolean that defines whether or not to install nginx-ingress | bool | `"true"` | no |
+| install\_certmanager | Boolean that defines whether or not to install Cert-Manager | bool | `"false"` | no |
+| install\_ingress | Boolean that defines whether or not to install nginx-ingress | bool | `"false"` | no |
 | install\_k3s\_version | Version of K3S to install | string | `"0.9.1"` | no |
-| install\_rancher | Boolean that defines whether or not to install Rancher | bool | `"true"` | no |
+| install\_rancher | Boolean that defines whether or not to install Rancher | bool | `"false"` | no |
 | k3s\_cluster\_secret | Override to set k3s cluster registration secret | string | `"null"` | no |
+| k3s\_deploy\_traefik | Configures whether to deploy traefik ingress or not | bool | `"true"` | no |
+| k3s\_disable\_agent | Whether to run the k3s agent on the same host as the k3s server | bool | `"true"` | no |
+| k3s\_storage\_cafile | Location to download RDS CA Bundle | string | `"/srv/rds-combined-ca-bundle.pem"` | no |
+| k3s\_storage\_endpoint | Storage Backend for K3S cluster to use. Valid options are 'sqlite' or 'postgres' | string | `"sqlite"` | no |
+| k3s\_tls\_san | Sets k3s tls-san flag to this value instead of the default load balancer | string | `"null"` | no |
 | letsencrypt\_email | LetsEncrypt email address to use | string | `"none@none.com"` | no |
 | name | Name for deployment | string | `"rancher-demo"` | no |
 | private\_subnets | List of private subnet ids. | list | `[]` | no |
@@ -37,7 +42,7 @@ This module supports creating a k3s cluster with a postgres backend in AWS. By d
 | public\_subnets\_cidr\_blocks | List of cidr_blocks of public subnets | list | `[]` | no |
 | r53\_domain | DNS domain for Route53 zone (defaults to domain if unset) | string | `""` | no |
 | rancher\_chart | Helm chart to use for Rancher install | string | `"rancher-stable/rancher"` | no |
-| rancher\_password |  | string | n/a | yes |
+| rancher\_password | Password to set for admin user during bootstrap of Rancher Server | string | `""` | no |
 | rancher\_version | Version of Rancher to install | string | `"2.3.1"` | no |
 | registration\_command | Registration command to import cluster into Rancher. Should not be used when installing Rancher in this same cluster | string | `""` | no |
 | server\_image\_id | AMI to use for k3s server instances | string | `"null"` | no |
@@ -46,8 +51,7 @@ This module supports creating a k3s cluster with a postgres backend in AWS. By d
 | server\_node\_count | Number of server nodes to launch | number | `"1"` | no |
 | skip\_final\_snapshot | Boolean that defines whether or not the final snapshot should be created on RDS cluster deletion | bool | `"true"` | no |
 | ssh\_keys | SSH keys to inject into Rancher instances | list | `[]` | no |
-| storage\_cafile | Location to download RDS CA Bundle | string | `"/srv/rds-combined-ca-bundle.pem"` | no |
-| use\_default\_vpc | Should the default VPC for the region selected be used for Rancher | bool | `"true"` | no |
+| use\_default\_vpc | Should the default VPC for the region selected be used for Rancher | bool | `"false"` | no |
 | vpc\_id | If use_default_vpc is false, the vpc id that Rancher should use | string | `"null"` | no |
 
 ## Outputs
