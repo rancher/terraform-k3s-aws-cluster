@@ -93,10 +93,15 @@ resource "aws_instance" "bastion" {
 }
 
 module "k3s_rancher" {
-  source                       = "../"
+  source                       = "../../"
   vpc_id                       = module.vpc.vpc_id
   aws_region                   = "us-west-2"
   aws_profile                  = "rancher-eng"
+  rancher_password             = "u7qmyhm3wbgujjuijs3rqfpm2e"
+  install_rancher              = true
+  install_certmanager          = true
+  install_nginx_ingress        = true
+  k3s_deploy_traefik           = false
   private_subnets              = module.vpc.private_subnets
   public_subnets               = module.vpc.public_subnets
   ssh_keys                     = ["ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIN5O7k6gRYCU7YPkCH6dyXVW10izMAkDAQtQxNxdRE22 drpebcak"]

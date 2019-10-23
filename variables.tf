@@ -103,16 +103,10 @@ variable "certmanager_version" {
   description = "Version of cert-manager to install"
 }
 
-variable "use_default_vpc" {
-  type        = bool
-  default     = false
-  description = "Should the default VPC for the region selected be used for Rancher"
-}
-
 variable "vpc_id" {
   type        = string
   default     = null
-  description = "If use_default_vpc is false, the vpc id that Rancher should use"
+  description = "The vpc id that Rancher should use"
 }
 
 variable "aws_region" {
@@ -249,7 +243,7 @@ variable "k3s_storage_endpoint" {
 }
 
 variable "k3s_disable_agent" {
-  default     = true
+  default     = false
   type        = bool
   description = "Whether to run the k3s agent on the same host as the k3s server"
 }
@@ -264,4 +258,10 @@ variable "k3s_deploy_traefik" {
   default     = true
   type        = bool
   description = "Configures whether to deploy traefik ingress or not"
+}
+
+variable "rancher2_token_key" {
+  default     = null
+  type        = string
+  description = "Rancher2 API token for authentication"
 }

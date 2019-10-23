@@ -217,12 +217,6 @@ resource "aws_rds_cluster_parameter_group" "k3s" {
     value        = "1"
     apply_method = "pending-reboot"
   }
-
-  parameter {
-    name         = "ssl"
-    value        = "1"
-    apply_method = "pending-reboot"
-  }
 }
 
 resource "aws_rds_cluster" "k3s" {
@@ -262,7 +256,7 @@ resource "aws_rds_cluster_instance" "k3s" {
 ### Create Public Rancher DNS
 #############################
 resource "aws_route53_record" "rancher" {
-  count    = local.create_external_nlb
+  count    = local.install_rancher ? local.create_external_nlb : 0
   zone_id  = data.aws_route53_zone.dns_zone.zone_id
   name     = "${local.name}.${local.domain}"
   type     = "CNAME"

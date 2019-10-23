@@ -37,7 +37,7 @@ locals {
   db_name                     = var.db_name != null ? var.db_name : var.name
   db_node_count               = var.k3s_storage_endpoint != "sqlite" ? var.db_node_count : 0
   k3s_storage_cafile          = var.k3s_storage_cafile
-  k3s_storage_endpoint        = var.k3s_storage_endpoint == "sqlite" ? null : "--storage-endpoint postgres://${local.db_user}:${local.db_pass}@${aws_rds_cluster.k3s.0.endpoint}/${local.db_name}"
+  k3s_storage_endpoint        = var.k3s_storage_endpoint == "sqlite" ? null : "postgres://${local.db_user}:${local.db_pass}@${aws_rds_cluster.k3s.0.endpoint}/${local.db_name}"
   k3s_disable_agent           = var.k3s_disable_agent ? "--disable-agent" : ""
   k3s_tls_san                 = var.k3s_tls_san != null ? var.k3s_tls_san : "--tls-san ${aws_lb.server-lb.dns_name}"
   k3s_deploy_traefik          = var.k3s_deploy_traefik ? "" : "--no-deploy traefik"
@@ -68,11 +68,6 @@ provider "rancher2" {
   alias     = "bootstrap"
   api_url   = "https://${local.name}.${local.domain}"
   bootstrap = true
-}
-
-provider "rancher2" {
-  api_url   = "https://${local.name}.${local.domain}"
-  token_key = rancher2_bootstrap.admin.0.token
 }
 
 resource "null_resource" "wait_for_rancher" {
