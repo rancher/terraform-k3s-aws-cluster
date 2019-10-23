@@ -94,8 +94,6 @@ resource "aws_instance" "bastion" {
 
 module "k3s_rancher" {
   source                       = "../"
-  rancher_password             = "changeme"
-  use_default_vpc              = false
   vpc_id                       = module.vpc.vpc_id
   aws_region                   = "us-west-2"
   aws_profile                  = "rancher-eng"
@@ -106,6 +104,7 @@ module "k3s_rancher" {
   k3s_cluster_secret           = "secretvaluechangeme"
   domain                       = "eng.rancher.space"
   aws_azs                      = ["us-west-2a", "us-west-2b", "us-west-2c"]
+  k3s_storage_endpoint         = "postgres"
   db_user                      = "exampleuser"
   db_pass                      = "mD,50cbf5597fd320b6a732ce778082a0359"
   extra_server_security_groups = [module.vpc.default_security_group_id]
