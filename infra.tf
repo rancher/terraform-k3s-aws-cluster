@@ -210,7 +210,7 @@ resource "aws_rds_cluster_parameter_group" "k3s" {
   count       = local.deploy_rds
   name_prefix = "${local.name}-"
   description = "Force SSL for aurora-postgresql10.7"
-  family      = "aurora-postgresql10.7"
+  family      = "aurora-postgresql10"
 
   parameter {
     name         = "rds.force_ssl"
