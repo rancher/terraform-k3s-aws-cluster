@@ -1,6 +1,6 @@
 ### Terraform K3S AWS Cluster
 
-This module supports creating a k3s cluster with a postgres backend in AWS. By default it will also install Rancher Server.
+This module supports creating a k3s cluster with a postgres backend in AWS. It allows you to optionally install nginx-ingress, Rancher Server, and cert-manager, or import your K3S cluster into an existing Rancher Server.
 
 <!-- BEGINNING OF PRE-COMMIT-TERRAFORM DOCS HOOK -->
 ## Inputs
@@ -30,7 +30,7 @@ This module supports creating a k3s cluster with a postgres backend in AWS. By d
 | install\_rancher | Boolean that defines whether or not to install Rancher | bool | `"false"` | no |
 | k3s\_cluster\_secret | Override to set k3s cluster registration secret | string | `"null"` | no |
 | k3s\_deploy\_traefik | Configures whether to deploy traefik ingress or not | bool | `"true"` | no |
-| k3s\_disable\_agent | Whether to run the k3s agent on the same host as the k3s server | bool | `"true"` | no |
+| k3s\_disable\_agent | Whether to run the k3s agent on the same host as the k3s server | bool | `"false"` | no |
 | k3s\_storage\_cafile | Location to download RDS CA Bundle | string | `"/srv/rds-combined-ca-bundle.pem"` | no |
 | k3s\_storage\_endpoint | Storage Backend for K3S cluster to use. Valid options are 'sqlite' or 'postgres' | string | `"sqlite"` | no |
 | k3s\_tls\_san | Sets k3s tls-san flag to this value instead of the default load balancer | string | `"null"` | no |
@@ -41,6 +41,7 @@ This module supports creating a k3s cluster with a postgres backend in AWS. By d
 | public\_subnets | List of public subnet ids. | list | `[]` | no |
 | public\_subnets\_cidr\_blocks | List of cidr_blocks of public subnets | list | `[]` | no |
 | r53\_domain | DNS domain for Route53 zone (defaults to domain if unset) | string | `""` | no |
+| rancher2\_token\_key | Rancher2 API token for authentication | string | `"null"` | no |
 | rancher\_chart | Helm chart to use for Rancher install | string | `"rancher-stable/rancher"` | no |
 | rancher\_password | Password to set for admin user during bootstrap of Rancher Server | string | `""` | no |
 | rancher\_version | Version of Rancher to install | string | `"2.3.1"` | no |
@@ -51,8 +52,7 @@ This module supports creating a k3s cluster with a postgres backend in AWS. By d
 | server\_node\_count | Number of server nodes to launch | number | `"1"` | no |
 | skip\_final\_snapshot | Boolean that defines whether or not the final snapshot should be created on RDS cluster deletion | bool | `"true"` | no |
 | ssh\_keys | SSH keys to inject into Rancher instances | list | `[]` | no |
-| use\_default\_vpc | Should the default VPC for the region selected be used for Rancher | bool | `"false"` | no |
-| vpc\_id | If use_default_vpc is false, the vpc id that Rancher should use | string | `"null"` | no |
+| vpc\_id | The vpc id that Rancher should use | string | `"null"` | no |
 
 ## Outputs
 
