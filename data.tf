@@ -1,5 +1,5 @@
 data "aws_vpc" "default" {
-  default = var.vpc_id == null ? true : false
+  default = false
   id      = var.vpc_id
 }
 
@@ -37,11 +37,6 @@ data "aws_ami" "ubuntu" {
   }
 }
 
-data "rancher2_user" "admin" {
-  username   = "admin"
-  depends_on = [rancher2_bootstrap.admin]
-}
-
 data "template_cloudinit_config" "k3s_server" {
   gzip          = true
   base64_encode = true
@@ -60,7 +55,7 @@ data "template_cloudinit_config" "k3s_server" {
 
   part {
     content_type = "text/x-shellscript"
-    content      = file("${path.module}/files/ingress-install.sh")
+    content      = templatefile("${path.module}/files/ingress-install.sh", { install_nginx_ingress = local.install_nginx_ingress })
   }
 
   part {
