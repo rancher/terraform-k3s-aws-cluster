@@ -1,7 +1,7 @@
 resource "random_pet" "lb" {}
 
 resource "aws_lb" "server-lb" {
-  name               = "${local.name}-int-${random_pet.lb.id}"
+  name               = substr("${local.name}-int-${random_pet.lb.id}", 0, 24)
   internal           = true
   load_balancer_type = "network"
   subnets            = local.private_subnets
@@ -19,7 +19,7 @@ resource "aws_lb_listener" "server-port_6443" {
 }
 
 resource "aws_lb_target_group" "server-6443" {
-  name     = "${local.name}-6443-${random_pet.lb.id}"
+  name     = substr("${local.name}-6443-${random_pet.lb.id}", 0, 24)
   port     = 6443
   protocol = "TCP"
   vpc_id   = data.aws_vpc.default.id
@@ -28,7 +28,7 @@ resource "aws_lb_target_group" "server-6443" {
 
 resource "aws_lb" "lb" {
   count              = local.create_external_nlb
-  name               = "${local.name}-ext-${random_pet.lb.id}"
+  name               = substr("${local.name}-ext-${random_pet.lb.id}", 0, 24)
   internal           = false
   load_balancer_type = "network"
   subnets            = local.public_subnets
@@ -64,7 +64,7 @@ resource "aws_lb_listener" "port_80" {
 
 resource "aws_lb_target_group" "agent-443" {
   count    = local.create_external_nlb
-  name     = "${local.name}-443-${random_pet.lb.id}"
+  name     = substr("${local.name}-443-${random_pet.lb.id}", 0, 24)
   port     = 443
   protocol = "TCP"
   vpc_id   = data.aws_vpc.default.id
@@ -87,7 +87,7 @@ resource "aws_lb_target_group" "agent-443" {
 
 resource "aws_lb_target_group" "agent-80" {
   count    = local.create_external_nlb
-  name     = "${local.name}-80-${random_pet.lb.id}"
+  name     = substr("${local.name}-80-${random_pet.lb.id}", 0, 24)
   port     = 80
   protocol = "TCP"
   vpc_id   = data.aws_vpc.default.id
