@@ -8,6 +8,7 @@ data "aws_subnet_ids" "available" {
 }
 
 data "aws_route53_zone" "dns_zone" {
+  count    = local.use_route53
   provider = aws.r53
   name     = local.r53_domain
 }

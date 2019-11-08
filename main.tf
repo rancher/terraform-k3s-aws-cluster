@@ -52,6 +52,7 @@ locals {
   create_external_nlb         = var.create_external_nlb ? 1 : 0
   registration_command        = var.registration_command
   rancher_password            = var.rancher_password
+  use_route53                 = var.use_route53 ? 1 : 0
 }
 
 resource "random_password" "k3s_cluster_secret" {
@@ -93,8 +94,7 @@ EOF
   depends_on = [
     aws_autoscaling_group.k3s_server,
     aws_autoscaling_group.k3s_agent,
-    aws_rds_cluster_instance.k3s,
-    aws_route53_record.rancher
+    aws_rds_cluster_instance.k3s
   ]
 }
 

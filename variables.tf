@@ -277,3 +277,9 @@ variable "server_k3s_exec" {
   type        = string
   description = "exec args to pass to k3s server"
 }
+
+variable "use_route53" {
+  default     = true
+  type        = bool
+  description = "Configures whether to use route_53 DNS or not"
+}

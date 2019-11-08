@@ -54,6 +54,7 @@ This module supports creating a k3s cluster with a postgres backend in AWS. It a
 | server\_node\_count | Number of server nodes to launch | number | `"1"` | no |
 | skip\_final\_snapshot | Boolean that defines whether or not the final snapshot should be created on RDS cluster deletion | bool | `"true"` | no |
 | ssh\_keys | SSH keys to inject into Rancher instances | list | `[]` | no |
+| use\_route53 | Configures whether to use route_53 DNS or not | bool | `"true"` | no |
 | vpc\_id | The vpc id that Rancher should use | string | `"null"` | no |
 
 ## Outputs
