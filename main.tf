@@ -36,8 +36,8 @@ locals {
   k3s_disable_agent           = var.k3s_disable_agent ? "--disable-agent" : ""
   k3s_tls_san                 = var.k3s_tls_san != null ? var.k3s_tls_san : "--tls-san ${aws_lb.server-lb.dns_name}"
   k3s_deploy_traefik          = var.k3s_deploy_traefik ? "" : "--no-deploy traefik"
-  server_k3s_exec             = var.server_k3s_exec ? "" : var.server_k3s_exec
-  agent_k3s_exec              = var.agent_k3s_exec ? "" : var.agent_k3s_exec
+  server_k3s_exec             = var.server_k3s_exec != null ? var.server_k3s_exec : ""
+  agent_k3s_exec              = var.agent_k3s_exec != null ? var.agent_k3s_exec : ""
   certmanager_version         = var.certmanager_version
   rancher_version             = var.rancher_version
   letsencrypt_email           = var.letsencrypt_email
@@ -53,6 +53,7 @@ locals {
   registration_command        = var.registration_command
   rancher_password            = var.rancher_password
   use_route53                 = var.use_route53 ? 1 : 0
+  subdomain                   = var.subdomain != null ? var.subdomain : var.name
 }
 
 resource "random_password" "k3s_cluster_secret" {

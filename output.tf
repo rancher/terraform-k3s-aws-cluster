@@ -11,3 +11,7 @@ output "rancher_token" {
   value     = local.install_rancher ? rancher2_bootstrap.admin.0.token : null
   sensitive = true
 }
+
+output "external_lb_dns_name" {
+  value = aws_lb.lb.0.dns_name
+}

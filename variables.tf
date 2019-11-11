@@ -283,3 +283,8 @@ variable "use_route53" {
   type        = bool
   description = "Configures whether to use route_53 DNS or not"
 }
+variable "subdomain" {
+  default     = null
+  type        = string
+  description = "subdomain to host rancher on, instead of using `var.name`"
+}
