@@ -63,7 +63,7 @@ resource "random_password" "k3s_cluster_secret" {
 
 provider "rancher2" {
   alias     = "bootstrap"
-  api_url   = "https://${local.name}.${local.domain}"
+  api_url   = "https://${local.subdomain}.${local.domain}"
   bootstrap = true
 }
 
@@ -71,15 +71,12 @@ resource "null_resource" "wait_for_rancher" {
   count = local.install_rancher ? 1 : 0
   provisioner "local-exec" {
     command = <<EOF
-while [ "$${subject}" != "*  subject: CN=$${RANCHER_HOSTNAME}" ]; do
-    subject=$(curl -vk -m 2 "https://$${RANCHER_HOSTNAME}/ping" 2>&1 | grep "subject:")
-    echo "Cert Subject Response: $${subject}"
-    if [ "$${subject}" != "*  subject: CN=$${RANCHER_HOSTNAME}" ]; then
-      sleep 10
-    fi
+until echo "$${subject}" | grep "CN=${local.subdomain}.${local.domain}"; do
+    sleep 5
+    subject=$(curl -vk -m 2 "https://${local.subdomain}.${local.domain}/ping" 2>&1 | grep "subject:")
 done
 while [ "$${resp}" != "pong" ]; do
-    resp=$(curl -sSk -m 2 "https://$${RANCHER_HOSTNAME}/ping")
+    resp=$(curl -sSk -m 2 "https://${local.subdomain}.${local.domain}/ping")
     echo "Rancher Response: $${resp}"
     if [ "$${resp}" != "pong" ]; then
       sleep 10
@@ -89,7 +86,7 @@ EOF
 
 
     environment = {
-      RANCHER_HOSTNAME = "${local.name}.${local.domain}"
+      RANCHER_HOSTNAME = "${local.subdomain}.${local.domain}"
     }
   }
   depends_on = [

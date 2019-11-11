@@ -1,5 +1,5 @@
 output "rancher_admin_password" {
-  value     = local.rancher_password
+  value     = local.install_rancher ? local.rancher_password : null
   sensitive = true
 }
 
@@ -13,5 +13,10 @@ output "rancher_token" {
 }
 
 output "external_lb_dns_name" {
-  value = aws_lb.lb.0.dns_name
+  value = local.create_external_nlb > 0 ? aws_lb.lb.0.dns_name : null
+}
+
+output "k3s_cluster_secret" {
+  value     = local.k3s_cluster_secret
+  sensitive = true
 }
