@@ -36,8 +36,8 @@ locals {
   k3s_disable_agent           = var.k3s_disable_agent ? "--disable-agent" : ""
   k3s_tls_san                 = var.k3s_tls_san != null ? var.k3s_tls_san : "--tls-san ${aws_lb.server-lb.dns_name}"
   k3s_deploy_traefik          = var.k3s_deploy_traefik ? "" : "--no-deploy traefik"
-  server_k3s_exec             = ""
-  agent_k3s_exec              = ""
+  server_k3s_exec             = var.server_k3s_exec != null ? var.server_k3s_exec : ""
+  agent_k3s_exec              = var.agent_k3s_exec != null ? var.agent_k3s_exec : ""
   certmanager_version         = var.certmanager_version
   rancher_version             = var.rancher_version
   letsencrypt_email           = var.letsencrypt_email
@@ -52,6 +52,8 @@ locals {
   create_external_nlb         = var.create_external_nlb ? 1 : 0
   registration_command        = var.registration_command
   rancher_password            = var.rancher_password
+  use_route53                 = var.use_route53 ? 1 : 0
+  subdomain                   = var.subdomain != null ? var.subdomain : var.name
 }
 
 resource "random_password" "k3s_cluster_secret" {
@@ -61,7 +63,7 @@ resource "random_password" "k3s_cluster_secret" {
 
 provider "rancher2" {
   alias     = "bootstrap"
-  api_url   = "https://${local.name}.${local.domain}"
+  api_url   = "https://${local.subdomain}.${local.domain}"
   bootstrap = true
 }
 
@@ -69,15 +71,12 @@ resource "null_resource" "wait_for_rancher" {
   count = local.install_rancher ? 1 : 0
   provisioner "local-exec" {
     command = <<EOF
-while [ "$${subject}" != "*  subject: CN=$${RANCHER_HOSTNAME}" ]; do
-    subject=$(curl -vk -m 2 "https://$${RANCHER_HOSTNAME}/ping" 2>&1 | grep "subject:")
-    echo "Cert Subject Response: $${subject}"
-    if [ "$${subject}" != "*  subject: CN=$${RANCHER_HOSTNAME}" ]; then
-      sleep 10
-    fi
+until echo "$${subject}" | grep "CN=${local.subdomain}.${local.domain}"; do
+    sleep 5
+    subject=$(curl -vk -m 2 "https://${local.subdomain}.${local.domain}/ping" 2>&1 | grep "subject:")
 done
 while [ "$${resp}" != "pong" ]; do
-    resp=$(curl -sSk -m 2 "https://$${RANCHER_HOSTNAME}/ping")
+    resp=$(curl -sSk -m 2 "https://${local.subdomain}.${local.domain}/ping")
     echo "Rancher Response: $${resp}"
     if [ "$${resp}" != "pong" ]; then
       sleep 10
@@ -87,14 +86,13 @@ EOF
 
 
     environment = {
-      RANCHER_HOSTNAME = "${local.name}.${local.domain}"
+      RANCHER_HOSTNAME = "${local.subdomain}.${local.domain}"
     }
   }
   depends_on = [
     aws_autoscaling_group.k3s_server,
     aws_autoscaling_group.k3s_agent,
-    aws_rds_cluster_instance.k3s,
-    aws_route53_record.rancher
+    aws_rds_cluster_instance.k3s
   ]
 }
 

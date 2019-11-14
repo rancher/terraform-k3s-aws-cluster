@@ -265,3 +265,26 @@ variable "rancher2_token_key" {
   type        = string
   description = "Rancher2 API token for authentication"
 }
+
+variable "agent_k3s_exec" {
+  default     = null
+  type        = string
+  description = "exec args to pass to k3s agents"
+}
+
+variable "server_k3s_exec" {
+  default     = null
+  type        = string
+  description = "exec args to pass to k3s server"
+}
+
+variable "use_route53" {
+  default     = true
+  type        = bool
+  description = "Configures whether to use route_53 DNS or not"
+}
+variable "subdomain" {
+  default     = null
+  type        = string
+  description = "subdomain to host rancher on, instead of using `var.name`"
+}

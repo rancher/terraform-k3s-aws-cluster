@@ -10,6 +10,7 @@ This module supports creating a k3s cluster with a postgres backend in AWS. It a
 | agent\_image\_id | AMI to use for k3s agent instances | string | `"null"` | no |
 | agent\_instance\_ssh\_user | Username for sshing into instances | string | `"ubuntu"` | no |
 | agent\_instance\_type |  | string | `"m5.large"` | no |
+| agent\_k3s\_exec | exec args to pass to k3s agents | string | `"null"` | no |
 | agent\_node\_count | Number of agent nodes to launch | number | `"3"` | no |
 | aws\_azs | List of AWS Availability Zones in the VPC | list | `"null"` | no |
 | aws\_profile | Name of the AWS Profile to use for authentication | string | `"null"` | no |
@@ -49,9 +50,11 @@ This module supports creating a k3s cluster with a postgres backend in AWS. It a
 | server\_image\_id | AMI to use for k3s server instances | string | `"null"` | no |
 | server\_instance\_ssh\_user | Username for sshing into instances | string | `"ubuntu"` | no |
 | server\_instance\_type |  | string | `"m5.large"` | no |
+| server\_k3s\_exec | exec args to pass to k3s server | string | `"null"` | no |
 | server\_node\_count | Number of server nodes to launch | number | `"1"` | no |
 | skip\_final\_snapshot | Boolean that defines whether or not the final snapshot should be created on RDS cluster deletion | bool | `"true"` | no |
 | ssh\_keys | SSH keys to inject into Rancher instances | list | `[]` | no |
+| use\_route53 | Configures whether to use route_53 DNS or not | bool | `"true"` | no |
 | vpc\_id | The vpc id that Rancher should use | string | `"null"` | no |
 
 ## Outputs
