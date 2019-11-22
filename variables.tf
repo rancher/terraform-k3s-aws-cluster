@@ -6,7 +6,7 @@ variable "rancher_password" {
 
 variable "rancher_version" {
   type        = string
-  default     = "2.3.1"
+  default     = "2.3.2"
   description = "Version of Rancher to install"
 }
 
@@ -133,7 +133,7 @@ variable "private_subnets" {
 }
 
 variable "install_k3s_version" {
-  default     = "0.9.1"
+  default     = "1.0.0"
   type        = string
   description = "Version of K3S to install"
 }
