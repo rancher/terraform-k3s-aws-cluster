@@ -224,7 +224,7 @@ variable "create_external_nlb" {
   description = "Boolean that defines whether or not to create an external load balancer"
 }
 
-variable "k3s_storage_cafile" {
+variable "k3s_datastore_cafile" {
   default     = "/srv/rds-combined-ca-bundle.pem"
   type        = string
   description = "Location to download RDS CA Bundle"
@@ -236,7 +236,7 @@ variable "registration_command" {
   description = "Registration command to import cluster into Rancher. Should not be used when installing Rancher in this same cluster"
 }
 
-variable "k3s_storage_endpoint" {
+variable "k3s_datastore_endpoint" {
   default     = "sqlite"
   type        = string
   description = "Storage Backend for K3S cluster to use. Valid options are 'sqlite' or 'postgres'"
