@@ -288,3 +288,9 @@ variable "subdomain" {
   type        = string
   description = "subdomain to host rancher on, instead of using `var.name`"
 }
+
+variable "rds_ca_cert_identifier" {
+  default     = "rds-ca-2019"
+  type        = string
+  description = "The identifier of the CA certificate for the DB instance."
+}

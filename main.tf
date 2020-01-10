@@ -54,6 +54,7 @@ locals {
   rancher_password            = var.rancher_password
   use_route53                 = var.use_route53 ? 1 : 0
   subdomain                   = var.subdomain != null ? var.subdomain : var.name
+  rds_ca_cert_identifier      = var.rds_ca_cert_identifier
 }
 
 resource "random_password" "k3s_cluster_secret" {

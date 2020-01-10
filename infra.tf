@@ -250,6 +250,7 @@ resource "aws_rds_cluster_instance" "k3s" {
   engine               = "aurora-postgresql"
   instance_class       = local.db_instance_type
   db_subnet_group_name = aws_db_subnet_group.private.0.id
+  ca_cert_identifier   = local.rds_ca_cert_identifier
 }
 
 #############################
