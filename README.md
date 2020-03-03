@@ -10,7 +10,7 @@ This module supports creating a k3s cluster with a postgres backend in AWS. It a
 | aws | n/a |
 | aws.r53 | n/a |
 | null | n/a |
-| rancher2.bootstrap | >= 1.6.0 |
+| rancher2.bootstrap | >= 1.7.2 |
 | random | n/a |
 | template | n/a |
 
