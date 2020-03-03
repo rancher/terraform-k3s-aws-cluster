@@ -6,7 +6,7 @@ variable "rancher_password" {
 
 variable "rancher_version" {
   type        = string
-  default     = "2.3.4"
+  default     = "2.3.5"
   description = "Version of Rancher to install"
 }
 
@@ -99,7 +99,7 @@ variable "agent_instance_ssh_user" {
 
 variable "certmanager_version" {
   type        = string
-  default     = "0.9.1"
+  default     = "0.13.1"
   description = "Version of cert-manager to install"
 }
 
