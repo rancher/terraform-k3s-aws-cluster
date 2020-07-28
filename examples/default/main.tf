@@ -80,7 +80,7 @@ resource "aws_security_group_rule" "bastion_egress_all" {
 }
 
 resource "aws_instance" "bastion" {
-  ami           = "${data.aws_ami.ubuntu.id}"
+  ami           = data.aws_ami.ubuntu.id
   instance_type = "t2.micro"
   subnet_id     = element(module.vpc.public_subnets, 0)
   user_data     = templatefile("${path.module}/bastion.tmpl", { ssh_keys = ["ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIN5O7k6gRYCU7YPkCH6dyXVW10izMAkDAQtQxNxdRE22 drpebcak"] })
@@ -121,7 +121,7 @@ module "k3s_rancher" {
   private_subnets_cidr_blocks  = module.vpc.private_subnets_cidr_blocks
   registration_command         = rancher2_cluster.k3s.cluster_registration_token[0].command
   providers = {
-    aws     = "aws"
-    aws.r53 = "aws.r53"
+    aws     = aws
+    aws.r53 = aws.r53
   }
 }
