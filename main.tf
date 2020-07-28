@@ -63,16 +63,17 @@ provider "rancher2" {
   alias     = "bootstrap"
   api_url   = "https://${local.name}.${local.domain}"
   bootstrap = true
+  insecure = true
 }
 
 resource "null_resource" "wait_for_rancher" {
   count = local.install_rancher ? 1 : 0
   provisioner "local-exec" {
     command = <<EOF
-while [ "$${subject}" != "*  subject: CN=$${RANCHER_HOSTNAME}" ]; do
+while [ "$${subject}" != "*  subject: O=cert-manager; CN=$${RANCHER_HOSTNAME}" ]; do
     subject=$(curl -vk -m 2 "https://$${RANCHER_HOSTNAME}/ping" 2>&1 | grep "subject:")
     echo "Cert Subject Response: $${subject}"
-    if [ "$${subject}" != "*  subject: CN=$${RANCHER_HOSTNAME}" ]; then
+    if [ "$${subject}" != "*  subject: O=cert-manager; CN=$${RANCHER_HOSTNAME}" ]; then
       sleep 10
     fi
 done
