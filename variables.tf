@@ -133,7 +133,7 @@ variable "private_subnets" {
 }
 
 variable "install_k3s_version" {
-  default     = "1.17.6+k3s1"
+  default     = "1.18.8+k3s1"
   type        = string
   description = "Version of K3S to install"
 }
