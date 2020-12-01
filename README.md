@@ -7,7 +7,8 @@ This module supports creating a k3s cluster with a postgres backend in AWS. It a
 
 | Name | Version |
 |------|---------|
-| rancher2 | >= 1.7.2 |
+| terraform | >= 0.13 |
+| rancher2 | >= 1.10.3 |
 
 ## Providers
 
@@ -16,7 +17,7 @@ This module supports creating a k3s cluster with a postgres backend in AWS. It a
 | aws | n/a |
 | aws.r53 | n/a |
 | null | n/a |
-| rancher2.bootstrap | >= 1.7.2 |
+| rancher2.bootstrap | >= 1.10.3 |
 | random | n/a |
 | template | n/a |
 
@@ -32,7 +33,7 @@ This module supports creating a k3s cluster with a postgres backend in AWS. It a
 | aws\_azs | List of AWS Availability Zones in the VPC | `list` | `null` | no |
 | aws\_profile | Name of the AWS Profile to use for authentication | `string` | `null` | no |
 | aws\_region | n/a | `string` | `null` | no |
-| certmanager\_version | Version of cert-manager to install | `string` | `"0.13.1"` | no |
+| certmanager\_version | Version of cert-manager to install | `string` | `"1.1.0"` | no |
 | create\_external\_nlb | Boolean that defines whether or not to create an external load balancer | `bool` | `true` | no |
 | db\_instance\_type | n/a | `string` | `"db.r5.large"` | no |
 | db\_name | Name of database to create in RDS | `string` | `null` | no |
@@ -43,7 +44,7 @@ This module supports creating a k3s cluster with a postgres backend in AWS. It a
 | extra\_agent\_security\_groups | Additional security groups to attach to k3s agent instances | `list` | `[]` | no |
 | extra\_server\_security\_groups | Additional security groups to attach to k3s server instances | `list` | `[]` | no |
 | install\_certmanager | Boolean that defines whether or not to install Cert-Manager | `bool` | `false` | no |
-| install\_k3s\_version | Version of K3S to install | `string` | `"1.17.6+k3s1"` | no |
+| install\_k3s\_version | Version of K3S to install | `string` | `"1.18.8+k3s1"` | no |
 | install\_nginx\_ingress | Boolean that defines whether or not to install nginx-ingress | `bool` | `false` | no |
 | install\_rancher | Boolean that defines whether or not to install Rancher | `bool` | `false` | no |
 | k3s\_cluster\_secret | Override to set k3s cluster registration secret | `string` | `null` | no |
@@ -62,7 +63,7 @@ This module supports creating a k3s cluster with a postgres backend in AWS. It a
 | rancher2\_token\_key | Rancher2 API token for authentication | `string` | `null` | no |
 | rancher\_chart | Helm chart to use for Rancher install | `string` | `"rancher-stable/rancher"` | no |
 | rancher\_password | Password to set for admin user during bootstrap of Rancher Server | `string` | `""` | no |
-| rancher\_version | Version of Rancher to install | `string` | `"2.3.5"` | no |
+| rancher\_version | Version of Rancher to install | `string` | `"2.5.3"` | no |
 | rds\_ca\_cert\_identifier | The identifier of the CA certificate for the DB instance. | `string` | `"rds-ca-2019"` | no |
 | registration\_command | Registration command to import cluster into Rancher. Should not be used when installing Rancher in this same cluster | `string` | `""` | no |
 | server\_image\_id | AMI to use for k3s server instances | `string` | `null` | no |
