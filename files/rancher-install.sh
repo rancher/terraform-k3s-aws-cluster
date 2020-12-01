@@ -22,6 +22,7 @@ metadata:
   name: rancher
   namespace: kube-system
 spec:
+  helmVersion: v3
   chart: https://releases.rancher.com/server-charts/latest/rancher-${rancher_version}.tgz
   targetNamespace: cattle-system
   valuesContent: |-
