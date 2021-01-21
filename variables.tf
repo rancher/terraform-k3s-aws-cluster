@@ -182,6 +182,12 @@ variable "db_pass" {
   description = "Password for RDS user"
 }
 
+variable "db_engine_version" {
+  default     = "10.11"
+  type        = string
+  description = "Engine Version for RDS Database"
+}
+
 variable "private_subnets_cidr_blocks" {
   default     = []
   type        = list

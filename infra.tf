@@ -224,7 +224,7 @@ resource "aws_rds_cluster" "k3s" {
   cluster_identifier_prefix       = "${local.name}-"
   engine                          = "aurora-postgresql"
   engine_mode                     = "provisioned"
-  engine_version                  = "10.11"
+  engine_version                  = local.db_engine_version
   db_cluster_parameter_group_name = aws_rds_cluster_parameter_group.k3s.0.name
   availability_zones              = local.aws_azs
   database_name                   = local.db_name
