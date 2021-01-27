@@ -30,19 +30,21 @@ This module supports creating a k3s cluster with a postgres backend in AWS. It a
 | agent\_instance\_type | n/a | `string` | `"m5.large"` | no |
 | agent\_k3s\_exec | exec args to pass to k3s agents | `string` | `null` | no |
 | agent\_node\_count | Number of agent nodes to launch | `number` | `3` | no |
-| aws\_azs | List of AWS Availability Zones in the VPC | `list` | `null` | no |
+| aws\_azs | List of AWS Availability Zones in the VPC | `list(any)` | `null` | no |
 | aws\_profile | Name of the AWS Profile to use for authentication | `string` | `null` | no |
 | aws\_region | n/a | `string` | `null` | no |
 | certmanager\_version | Version of cert-manager to install | `string` | `"1.1.0"` | no |
 | create\_external\_nlb | Boolean that defines whether or not to create an external load balancer | `bool` | `true` | no |
+| db\_allow\_major\_version\_upgrade | Enable to allow major engine version upgrades when changing engine versions. | `bool` | `true` | no |
+| db\_engine\_version | Engine Version for RDS Database | `string` | `"10.11"` | no |
 | db\_instance\_type | n/a | `string` | `"db.r5.large"` | no |
 | db\_name | Name of database to create in RDS | `string` | `null` | no |
 | db\_node\_count | Number of RDS database instances to launch | `number` | `1` | no |
 | db\_pass | Password for RDS user | `string` | n/a | yes |
 | db\_user | Username for RDS database | `string` | n/a | yes |
 | domain | n/a | `string` | `"eng.rancher.space"` | no |
-| extra\_agent\_security\_groups | Additional security groups to attach to k3s agent instances | `list` | `[]` | no |
-| extra\_server\_security\_groups | Additional security groups to attach to k3s server instances | `list` | `[]` | no |
+| extra\_agent\_security\_groups | Additional security groups to attach to k3s agent instances | `list(any)` | `[]` | no |
+| extra\_server\_security\_groups | Additional security groups to attach to k3s server instances | `list(any)` | `[]` | no |
 | install\_certmanager | Boolean that defines whether or not to install Cert-Manager | `bool` | `false` | no |
 | install\_k3s\_version | Version of K3S to install | `string` | `"1.19.4+k3s1"` | no |
 | install\_nginx\_ingress | Boolean that defines whether or not to install nginx-ingress | `bool` | `false` | no |
@@ -55,10 +57,10 @@ This module supports creating a k3s cluster with a postgres backend in AWS. It a
 | k3s\_tls\_san | Sets k3s tls-san flag to this value instead of the default load balancer | `string` | `null` | no |
 | letsencrypt\_email | LetsEncrypt email address to use | `string` | `"none@none.com"` | no |
 | name | Name for deployment | `string` | `"rancher-demo"` | no |
-| private\_subnets | List of private subnet ids. | `list` | `[]` | no |
-| private\_subnets\_cidr\_blocks | List of cidr\_blocks of private subnets | `list` | `[]` | no |
-| public\_subnets | List of public subnet ids. | `list` | `[]` | no |
-| public\_subnets\_cidr\_blocks | List of cidr\_blocks of public subnets | `list` | `[]` | no |
+| private\_subnets | List of private subnet ids. | `list(any)` | `[]` | no |
+| private\_subnets\_cidr\_blocks | List of cidr\_blocks of private subnets | `list(any)` | `[]` | no |
+| public\_subnets | List of public subnet ids. | `list(any)` | `[]` | no |
+| public\_subnets\_cidr\_blocks | List of cidr\_blocks of public subnets | `list(any)` | `[]` | no |
 | r53\_domain | DNS domain for Route53 zone (defaults to domain if unset) | `string` | `""` | no |
 | rancher2\_token\_key | Rancher2 API token for authentication | `string` | `null` | no |
 | rancher\_chart | Helm chart to use for Rancher install | `string` | `"rancher-stable/rancher"` | no |
@@ -72,7 +74,7 @@ This module supports creating a k3s cluster with a postgres backend in AWS. It a
 | server\_k3s\_exec | exec args to pass to k3s server | `string` | `null` | no |
 | server\_node\_count | Number of server nodes to launch | `number` | `1` | no |
 | skip\_final\_snapshot | Boolean that defines whether or not the final snapshot should be created on RDS cluster deletion | `bool` | `true` | no |
-| ssh\_keys | SSH keys to inject into Rancher instances | `list` | `[]` | no |
+| ssh\_keys | SSH keys to inject into Rancher instances | `list(any)` | `[]` | no |
 | subdomain | subdomain to host rancher on, instead of using `var.name` | `string` | `null` | no |
 | use\_route53 | Configures whether to use route\_53 DNS or not | `bool` | `true` | no |
 | vpc\_id | The vpc id that Rancher should use | `string` | `null` | no |

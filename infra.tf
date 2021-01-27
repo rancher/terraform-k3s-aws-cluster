@@ -225,6 +225,7 @@ resource "aws_rds_cluster" "k3s" {
   engine                          = "aurora-postgresql"
   engine_mode                     = "provisioned"
   engine_version                  = local.db_engine_version
+  db_allow_major_version_upgrade  = local.db_allow_major_version_upgrade
   db_cluster_parameter_group_name = aws_rds_cluster_parameter_group.k3s.0.name
   availability_zones              = local.aws_azs
   database_name                   = local.db_name

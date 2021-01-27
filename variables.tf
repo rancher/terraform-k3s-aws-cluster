@@ -23,7 +23,7 @@ variable "server_image_id" {
 }
 
 variable "ssh_keys" {
-  type        = list
+  type        = list(any)
   default     = []
   description = "SSH keys to inject into Rancher instances"
 }
@@ -122,13 +122,13 @@ variable "aws_profile" {
 
 variable "public_subnets" {
   default     = []
-  type        = list
+  type        = list(any)
   description = "List of public subnet ids."
 }
 
 variable "private_subnets" {
   default     = []
-  type        = list
+  type        = list(any)
   description = "List of private subnet ids."
 }
 
@@ -146,19 +146,19 @@ variable "k3s_cluster_secret" {
 
 variable "extra_server_security_groups" {
   default     = []
-  type        = list
+  type        = list(any)
   description = "Additional security groups to attach to k3s server instances"
 }
 
 variable "extra_agent_security_groups" {
   default     = []
-  type        = list
+  type        = list(any)
   description = "Additional security groups to attach to k3s agent instances"
 }
 
 variable "aws_azs" {
   default     = null
-  type        = list
+  type        = list(any)
   description = "List of AWS Availability Zones in the VPC"
 }
 
@@ -190,13 +190,13 @@ variable "db_engine_version" {
 
 variable "private_subnets_cidr_blocks" {
   default     = []
-  type        = list
+  type        = list(any)
   description = "List of cidr_blocks of private subnets"
 }
 
 variable "public_subnets_cidr_blocks" {
   default     = []
-  type        = list
+  type        = list(any)
   description = "List of cidr_blocks of public subnets"
 }
 
@@ -299,4 +299,10 @@ variable "rds_ca_cert_identifier" {
   default     = "rds-ca-2019"
   type        = string
   description = "The identifier of the CA certificate for the DB instance."
+}
+
+variable "db_allow_major_version_upgrade" {
+  default     = true
+  type        = bool
+  description = "Enable to allow major engine version upgrades when changing engine versions."
 }
